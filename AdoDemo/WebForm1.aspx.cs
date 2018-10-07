@@ -12,7 +12,7 @@ namespace AdoDemo
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Sample;Integrated Security=True; MultipleActiveResultSets=True");
+			SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Sample;Integrated Security=True;");
 			SqlCommand cmd = new SqlCommand("SELECT * FROM Product", con);
 			con.Open();
 			SqlDataReader rdr = cmd.ExecuteReader();
