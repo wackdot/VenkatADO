@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AdoDemo
 {
@@ -45,14 +46,16 @@ namespace AdoDemo
 			// Approach: Using
 			//string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=Sample;Integrated Security=True; MultipleActiveResultSets=True";
 
-			//using (SqlConnection con = new SqlConnection(connectionString))
-			//{
-			//	SqlCommand cmd = new SqlCommand("SELECT * FROM Product", con);
-			//	con.Open();
-			//	GridView1.DataSource = cmd.ExecuteReader();
-			//	GridView1.DataBind();
-			//}
-			
+			string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+
+			using (SqlConnection con = new SqlConnection(connectionString))
+			{
+				SqlCommand cmd = new SqlCommand("SELECT * FROM Product", con);
+				con.Open();
+				GridView1.DataSource = cmd.ExecuteReader();
+				GridView1.DataBind();
+			}
+
 
 		}
 	}
