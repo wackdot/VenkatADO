@@ -54,24 +54,24 @@ namespace AdoDemo
 		//}
 
 		// Preventing SQL Injection via Stored Procedure
-		protected void Btn_GetProducts_Click(object sender, EventArgs e)
-		{
-			// Using Web.config file to centralise all DB connection string configurations
-			string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+		//protected void Btn_GetProducts_Click(object sender, EventArgs e)
+		//{
+		//	// Using Web.config file to centralise all DB connection string configurations
+		//	string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
 
-			using (SqlConnection con = new SqlConnection(connectionString))
-			{
-				SqlCommand cmd = new SqlCommand();
-				cmd.Connection = con;
-				cmd.CommandText = "spGetProductsByName";
-				cmd.CommandType = System.Data.CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@ProductName", Tbx_InputProducts.Text + "%");
-				con.Open();
+		//	using (SqlConnection con = new SqlConnection(connectionString))
+		//	{
+		//		SqlCommand cmd = new SqlCommand();
+		//		cmd.Connection = con;
+		//		cmd.CommandText = "spGetProductsByName";
+		//		cmd.CommandType = System.Data.CommandType.StoredProcedure;
+		//		cmd.Parameters.AddWithValue("@ProductName", Tbx_InputProducts.Text + "%");
+		//		con.Open();
 
-				Gvw_DisplayProducts.DataSource = cmd.ExecuteReader();
-				Gvw_DisplayProducts.DataBind();
-			}
-		}
+		//		Gvw_DisplayProducts.DataSource = cmd.ExecuteReader();
+		//		Gvw_DisplayProducts.DataBind();
+		//	}
+		//}
 	}
 
 }
