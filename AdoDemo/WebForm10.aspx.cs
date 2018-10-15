@@ -33,7 +33,6 @@ namespace AdoDemo
 			ds.Tables["Students"].PrimaryKey = new DataColumn[] { ds.Tables["Students"].Columns["Id"] };
 			Cache.Insert("DATASET", ds, null, DateTime.Now.AddHours(24), System.Web.Caching.Cache.NoSlidingExpiration);
 
-
 			Gvw_Students.DataSource = ds;
 			Gvw_Students.DataBind();
 
