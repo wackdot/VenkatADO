@@ -125,5 +125,67 @@ namespace AdoDemo
 
 			Lbl_Message.Text = "Database Table Updated";
 		}
+
+		protected void Btn_DisplayRowState_Click(object sender, EventArgs e)
+		{
+			DataSet ds = (DataSet)Cache["DATASET"];
+			DataRow newDataRow = ds.Tables["Students"].NewRow();
+			newDataRow["Id"] = 101;
+			//ds.Tables["Students"].Rows.Add(newDataRow);
+
+			foreach (DataRow dr in ds.Tables["Students"].Rows)
+			{
+				if (dr.RowState == DataRowState.Deleted)
+				{
+					Response.Write(dr["Id", DataRowVersion.Original].ToString() + " - " + dr.RowState.ToString() + "<br/>");
+				}
+				else
+				{
+					Response.Write(dr["Id"].ToString() + " - " + dr.RowState.ToString() + "<br/>");
+				}		
+			}
+			Response.Write(newDataRow.RowState.ToString());
+ 		}
+
+		protected void Btn_UndoRowState_Click(object sender, EventArgs e)
+		{
+			DataSet ds = (DataSet)Cache["DATASET"];
+
+			if (ds.HasChanges())
+			{
+				ds.RejectChanges();
+				Cache.Insert("DATASET", ds, null, DateTime.Now.AddHours(24), System.Web.Caching.Cache.NoSlidingExpiration);
+				GetDataFromCache();
+
+				Lbl_Message.Text = "Changes Undone";
+				Lbl_Message.ForeColor = System.Drawing.Color.Green;
+			}
+			else
+			{
+				Lbl_Message.Text = "No changes to Undo";
+				Lbl_Message.ForeColor = System.Drawing.Color.Red;
+			}
+
+		}
+
+		protected void Btn_AcceptRowStateChanges_Click(object sender, EventArgs e)
+		{
+			DataSet ds = (DataSet)Cache["DATASET"];
+
+			if (ds.HasChanges())
+			{
+				ds.AcceptChanges();
+				Cache.Insert("DATASET", ds, null, DateTime.Now.AddHours(24), System.Web.Caching.Cache.NoSlidingExpiration);
+				GetDataFromCache();
+
+				Lbl_Message.Text = "Changes Accepted";
+				Lbl_Message.ForeColor = System.Drawing.Color.Green;
+			}
+			else
+			{
+				Lbl_Message.Text = "No changes made";
+				Lbl_Message.ForeColor = System.Drawing.Color.Red;
+			}
+		}
 	}
 }
